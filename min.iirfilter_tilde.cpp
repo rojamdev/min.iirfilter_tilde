@@ -4,7 +4,6 @@
 ///	@license	Use of this source code is governed by the MIT License found in the License.md file.
 
 #include "c74_min.h"
-#include "circular_buffer.h"
 #include "first_order_iir.h"
 
 using namespace c74::min;
@@ -19,40 +18,37 @@ public:
     MIN_RELATED		{ "phasor~" };
 
     inlet<>     input {this, "(signal) input"};
-    inlet<>     alpha_input {this, "(number) frequency", alpha_value};
+    inlet<>     alpha_in {this, "(float) frequency", m_alpha};
     outlet<>    output {this, "(signal) output", "signal"};
 
-    /* argument<number> frequency_arg {this, "frequency", "Initial frequency in hertz.",
-        MIN_ARGUMENT_FUNCTION {
-            frequency = arg;
+    attribute<float, threadsafe::no, limit::clamp> m_alpha {
+		this, 
+		"alpha", 
+		0.5,
+		description {"Alpha value to control the filter."},
+		range {0.01, 0.99}
+	};
+
+    message<> m_number {
+        this, 
+        "number", 
+        "Set the alpha value for the filter.",
+		MIN_FUNCTION {
+            if (inlet == 1) 
+                m_alpha = args[0];
+	        return {};
         }
     };
-
-    message<> m_number { this, "number", "Set the frequency in Hz.",
-        MIN_FUNCTION {
-            frequency = args;
-            return {};
-        }
-    };
-
-    attribute<number> frequency { this, "frequency", 1.0,
-        description {"Frequency in Hz"},
-        setter { MIN_FUNCTION {
-            m_oscillator.frequency(args[0], samplerate());
-            return args;
-        }}
-    }; */
-
-    attribute<number> alpha_value {this, "alpha", 0.5};
 
     sample operator()(sample x)
     {
-		auto y = x * alpha_value;
-        
+		IIRfilter.setAlpha(m_alpha);
+        auto y = IIRfilter.processSample(x);
         return y;
     }
 
 private:
+	FirstOrderIIR IIRfilter;
 };
 
 MIN_EXTERNAL(iirfilter);

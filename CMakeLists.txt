@@ -19,7 +19,6 @@ include_directories(
 
 set( SOURCE_FILES
 	${PROJECT_NAME}.cpp
-	circular_buffer.h
 	first_order_iir.h
 )
 
