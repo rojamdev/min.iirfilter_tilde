@@ -14,12 +14,12 @@ class iirfilter : public object<iirfilter>, public sample_operator<1, 1>
 public:
     MIN_DESCRIPTION	{ "Baisc IIR low-pass filter" };
     MIN_TAGS		{ "audio" };
-    MIN_AUTHOR		{ "Me" };
+    MIN_AUTHOR		{ "Rojam" };
     MIN_RELATED		{ "phasor~" };
 
-    inlet<>     input {this, "(signal) input"};
-    inlet<>     alpha_in {this, "(float) frequency", m_alpha};
-    outlet<>    output {this, "(signal) output", "signal"};
+    inlet<>     input       { this, "(signal) input" };
+    inlet<>     alpha_in    { this, "(float) alpha", m_alpha };
+    outlet<>    output      { this, "(signal) output", "signal" };
 
     attribute<float, threadsafe::no, limit::clamp> m_alpha {
 		this, 
@@ -40,8 +40,7 @@ public:
         }
     };
 
-    sample operator()(sample x)
-    {
+    sample operator()(sample x) {
 		IIRfilter.setAlpha(m_alpha);
         auto y = IIRfilter.processSample(x);
         return y;

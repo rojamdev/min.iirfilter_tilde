@@ -8,7 +8,7 @@ public:
 
 	double processSample(double sample) {
 		double newSample = ((1 - alpha) * sample) + (alpha * lastSample);
-		lastSample       = newSample;
+		lastSample = newSample;
 		return newSample;
 	}
 
