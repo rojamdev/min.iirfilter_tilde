@@ -1,8 +1,3 @@
-/// @file
-///	@ingroup 	minexamples
-///	@copyright	Copyright 2018 The Min-DevKit Authors. All rights reserved.
-///	@license	Use of this source code is governed by the MIT License found in the License.md file.
-
 #include "c74_min.h"
 #include "first_order_iir.h"
 
@@ -12,7 +7,7 @@ using namespace c74::min;
 class iirfilter : public object<iirfilter>, public sample_operator<1, 1> 
 {
 public:
-    MIN_DESCRIPTION	{ "Baisc IIR low-pass filter" };
+    MIN_DESCRIPTION	{ "Basic IIR low-pass filter" };
     MIN_TAGS		{ "audio" };
     MIN_AUTHOR		{ "Rojam" };
     MIN_RELATED		{ "phasor~" };
