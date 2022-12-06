@@ -1,6 +1,6 @@
 # min.iirfilter_tilde
 
-A basic first-order IIR low pass filter for [Max/MSP](https://cycling74.com/products/max).
+An external for [Max/MSP](https://cycling74.com/products/max) that performs basic IIR low-pass filtering.
 
 ## Building
 
